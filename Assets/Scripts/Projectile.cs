@@ -12,12 +12,15 @@ public class Projectile : MonoBehaviour
     Rigidbody2D myRigidBody;
     Collider2D myCollider;
 
+    //References to other objects
+    PlayerController player;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
+        player = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
@@ -29,13 +32,13 @@ public class Projectile : MonoBehaviour
     //Make bullet move
     public void Fly()
     {
-        //myRigidBody.velocity = new Vector2(0, projectileSpeed);
-        transform.localScale += new Vector3(0F, .25f, 0f);
+        transform.localScale += new Vector3(0F, .25f, 0f); //Stretch the length of the projectile
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         Destroy(gameObject);
+        player.isShotFired = false; //Give player the ability to shoot again
     }
    
 }

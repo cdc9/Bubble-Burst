@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
 
     //Shoot code
     public GameObject projectile, projectileChain, gun;
+    public bool isShotFired;
 
 
     // Start is called before the first frame update
@@ -22,6 +24,7 @@ public class PlayerController : MonoBehaviour
         myRigidBody = GetComponent<Rigidbody2D>();
         myRigidBody.freezeRotation = true;
         myCollider = GetComponent<Collider2D>();
+        isShotFired = false;
     }
 
     // Update is called once per frame
@@ -44,14 +47,25 @@ public class PlayerController : MonoBehaviour
         //TODO add shoot code here
         if(Input.GetButtonDown("Fire1"))
         {
-            //Create a bullet based on whatever "projectile" the gameObject has assigned
-            GameObject newProjectile = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
-            newProjectile.transform.position = gun.transform.position;
+            //Limit the player to only one projectile on screen at a time
+            if(isShotFired == false)
+            {
+                //Create a bullet based on whatever "projectile" the gameObject has assigned
+                GameObject newProjectile = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
+                newProjectile.transform.position = gun.transform.position;
+                isShotFired = true;
+            }
 
-            //Create a chain object as well
-            //GameObject newProjectileChain = Instantiate(projectileChain, transform.position, Quaternion.identity) as GameObject;
-            //newProjectileChain.transform.position = gun.transform.position;
         }
 
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag   == "Bubble")
+        {
+            Debug.Log("Game OVER!!");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //Reload the scene
+        }
+    }
+
 }
