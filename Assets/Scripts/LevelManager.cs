@@ -6,14 +6,36 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     private GameObject winLabel;
+    public GameObject[] levelBubbles;
     public int bubbleCount;
-    private bool allBubblesGone;
+    public int totalLevelBubbles;
+
 
     //Use this for initialization
     void Start()
     {
-        bubbleCount = 0; // Start the game with zero bubbles counted
-        allBubblesGone = false;
+        levelBubbles = GameObject.FindGameObjectsWithTag("Bubble");
+
+        foreach(GameObject bubble in levelBubbles)
+        {
+            if(bubble.name.Contains("Green"))
+            {
+                totalLevelBubbles +=  1;
+            }
+            if (bubble.name.Contains("Red"))
+            {
+                totalLevelBubbles += 3;
+            }
+            if (bubble.name.Contains("Yellow"))
+            {
+                totalLevelBubbles += 7;
+            }
+            if (bubble.name.Contains("Blue"))
+            {
+                totalLevelBubbles += 15;
+            }
+        }
+        Debug.Log(totalLevelBubbles);
 
         //Find the you win text banner and set it to false
         FindYouWin();
@@ -46,10 +68,7 @@ public class LevelManager : MonoBehaviour
     //Count all remaining bubbles, if 0, win the level
     void Update()
     {
-        if(bubbleCount == 0 && allBubblesGone == true)
-        {
-            HandleWinCondition();
-        }
+        Debug.Log(totalLevelBubbles);
     }
 
     //Load the next level in the build index
@@ -60,6 +79,11 @@ public class LevelManager : MonoBehaviour
 
     public void HandleWinCondition()
     {
-        LoadNextLevel();
+        if (totalLevelBubbles == 0)
+        {
+            Debug.Log("You win!");
+            LoadNextLevel();
+        }
+        
     }
 }

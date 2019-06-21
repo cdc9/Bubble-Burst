@@ -43,7 +43,8 @@ public class Bubble : MonoBehaviour
         if (collision.gameObject.tag.Trim().Equals("Projectile")) 
         {
             Split();
-            levelManager.bubbleCount--;
+            levelManager.totalLevelBubbles--;
+            levelManager.HandleWinCondition();
             Destroy(gameObject);
         }
     }
@@ -60,7 +61,9 @@ public class Bubble : MonoBehaviour
         }
         else
         {
+            
             Destroy(gameObject);
+            
         }
 
 
