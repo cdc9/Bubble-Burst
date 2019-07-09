@@ -8,10 +8,11 @@ public class PlayerController : MonoBehaviour
 {
     //Player Config
     public float playerSpeed;
-
+    private bool isFacingRight;
     //cached components
-    Rigidbody2D myRigidBody;
+    Rigidbody2D myRigidbody;
     Collider2D myCollider;
+    Animator myAnimator;
 
     //Shoot code
     public GameObject projectile, projectileChain, gun;
@@ -21,9 +22,10 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        myRigidBody = GetComponent<Rigidbody2D>();
-        myRigidBody.freezeRotation = true;
+        myRigidbody = GetComponent<Rigidbody2D>();
+        myRigidbody.freezeRotation = true;
         myCollider = GetComponent<Collider2D>();
+        myAnimator = GetComponent<Animator>();
         isShotFired = false;
     }
 
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Move();
+        FlipSprite();
         Shoot();
     }
     //NOTE: Go to project settings -> Input -> gravity to adjust how quickly the value of GetAxis drops to zero after letting go. Value 3 makes it feel slippery/laggy. Value 10 Stops almost immediately. Alternitively, user GetAxisRaw for -1,0,1 values. 
@@ -39,7 +42,11 @@ public class PlayerController : MonoBehaviour
     {
         float controlThrow = CrossPlatformInputManager.GetAxis("Horizontal"); //value is between -1 and +1 
         Vector2 playerVelocity = new Vector2(controlThrow * playerSpeed, 0); // vector2(x,y) where x is horizontal movement, and y is whatever the current y movement the player is going right now. if you put 0, player would stop all y axis movement
-        myRigidBody.velocity = playerVelocity; // set the new velocity
+        myRigidbody.velocity = playerVelocity; // set the new velocity
+
+        //Determine if the player''s running animation should be playing. If velocity is 0, stop running.
+        bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
+        myAnimator.SetBool("isRunning", playerHasHorizontalSpeed);
     }
 
     public void Shoot()
@@ -68,4 +75,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void FlipSprite()
+    {
+        //If the player is moving horizontally
+        bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
+        //Determine which way the player should face depending on his +/- x speed. As well as check to see if he's sliding
+        if (playerHasHorizontalSpeed == true)
+        {
+            // reverse the current scaling if the x myRigidbody
+            transform.localScale = new Vector2(Mathf.Sign(myRigidbody.velocity.x), 1f);
+            //Determine if the player should face left or right. This is checking if the player's velocity is positive or negative. 
+            if ((Mathf.Sign(myRigidbody.velocity.x) > Mathf.Epsilon))
+                isFacingRight = true;
+            else if ((Mathf.Sign(myRigidbody.velocity.x) < Mathf.Epsilon))
+                isFacingRight = false;
+        }
+    }
 }

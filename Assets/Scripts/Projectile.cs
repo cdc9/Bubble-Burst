@@ -32,7 +32,7 @@ public class Projectile : MonoBehaviour
     //Make bullet move
     public void Fly()
     {
-        transform.localScale += new Vector3(0F, .25f, 0f); //Stretch the length of the projectile
+        transform.localScale += new Vector3(0F, .15f, 0f); //Stretch the length of the projectile
     }
 
     void OnTriggerEnter2D(Collider2D collision)

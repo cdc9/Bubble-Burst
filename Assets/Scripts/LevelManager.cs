@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     private GameObject winLabel;
+    private bool winLabelBool;
     public GameObject[] levelBubbles;
     public int bubbleCount;
     public int totalLevelBubbles;
@@ -40,6 +41,7 @@ public class LevelManager : MonoBehaviour
         //Find the you win text banner and set it to false
         FindYouWin();
         winLabel.SetActive(false);
+        winLabelBool = false;
     }
 
     //Find the you win banner, if it doesn't exist, log warning
@@ -68,7 +70,7 @@ public class LevelManager : MonoBehaviour
     //Count all remaining bubbles, if 0, win the level
     void Update()
     {
-        Debug.Log(totalLevelBubbles);
+        WinScreenHandler();
     }
 
     //Load the next level in the build index
@@ -81,8 +83,22 @@ public class LevelManager : MonoBehaviour
     {
         if (totalLevelBubbles == 0)
         {
-            Debug.Log("You win!");
-            LoadNextLevel();
+            winLabel.SetActive(true);
+            winLabelBool = true;
+            Debug.Log(winLabel);
+            
+        }
+        
+    }
+
+    public void WinScreenHandler()
+    {
+        if(winLabelBool == true)
+        {
+            if (Input.GetButtonDown("Fire1"))
+            {
+                LoadNextLevel();
+            }
         }
         
     }

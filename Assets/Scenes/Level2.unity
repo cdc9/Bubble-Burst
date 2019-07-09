@@ -7862,7 +7862,7 @@ PrefabInstance:
     - target: {fileID: 3153750171871228665, guid: 717d16dfb93a96246a56301217a1a74b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3153750171871228665, guid: 717d16dfb93a96246a56301217a1a74b,
         type: 3}
@@ -7910,7 +7910,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e687dd709eea48a2f15c98814ac7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelBubbles: []
   bubbleCount: 0
+  totalLevelBubbles: 0
 --- !u!4 &2140695693
 Transform:
   m_ObjectHideFlags: 0
@@ -7942,11 +7944,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 7318363272630480927, guid: dcebbc0b1ccb0824b82035ed18b543cd,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 3916961307067639248, guid: dcebbc0b1ccb0824b82035ed18b543cd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7955,7 +7952,7 @@ PrefabInstance:
     - target: {fileID: 3916961307067639248, guid: dcebbc0b1ccb0824b82035ed18b543cd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.02
+      value: -9.044
       objectReference: {fileID: 0}
     - target: {fileID: 3916961307067639248, guid: dcebbc0b1ccb0824b82035ed18b543cd,
         type: 3}
@@ -8017,6 +8014,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.028
+      objectReference: {fileID: 0}
+    - target: {fileID: 7318363272630480927, guid: dcebbc0b1ccb0824b82035ed18b543cd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcebbc0b1ccb0824b82035ed18b543cd, type: 3}
