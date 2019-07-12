@@ -21,6 +21,7 @@ public class Projectile : MonoBehaviour
         myRigidBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
         player = FindObjectOfType<PlayerController>();
+        Debug.Log(projectileSpeed);
     }
 
     // Update is called once per frame
@@ -32,7 +33,13 @@ public class Projectile : MonoBehaviour
     //Make bullet move
     public void Fly()
     {
+        if(player.harpoonProjectile == true)
         transform.localScale += new Vector3(0F, .15f, 0f); //Stretch the length of the projectile
+        if (player.arrowProjectile == true)
+        {
+            myRigidBody.velocity = new Vector2(0, projectileSpeed);
+        }
+            
     }
 
     void OnTriggerEnter2D(Collider2D collision)

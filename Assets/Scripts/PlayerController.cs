@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,6 +10,8 @@ public class PlayerController : MonoBehaviour
     //Player Config
     public float playerSpeed;
     private bool isFacingRight;
+    public bool harpoonProjectile;
+    public bool arrowProjectile;
     //cached components
     Rigidbody2D myRigidbody;
     Collider2D myCollider;
@@ -16,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     //Shoot code
     public GameObject projectile, projectileChain, gun;
+    public GameObject[] projectileType;
     public bool isShotFired;
 
 
@@ -26,7 +30,12 @@ public class PlayerController : MonoBehaviour
         myRigidbody.freezeRotation = true;
         myCollider = GetComponent<Collider2D>();
         myAnimator = GetComponent<Animator>();
+
+        //Projectile starting values
         isShotFired = false;
+        projectile = projectileType[0];
+        harpoonProjectile = true;
+        arrowProjectile = false;
     }
 
     // Update is called once per frame
@@ -35,7 +44,11 @@ public class PlayerController : MonoBehaviour
         Move();
         FlipSprite();
         Shoot();
+        SetProjectile();
     }
+
+
+
     //NOTE: Go to project settings -> Input -> gravity to adjust how quickly the value of GetAxis drops to zero after letting go. Value 3 makes it feel slippery/laggy. Value 10 Stops almost immediately. Alternitively, user GetAxisRaw for -1,0,1 values. 
     //NOTE 2: Go to project settings -> Input -> sensitivity to adjust how quickly the value of X/Y accelerates
     public void Move()
@@ -89,6 +102,24 @@ public class PlayerController : MonoBehaviour
                 isFacingRight = true;
             else if ((Mathf.Sign(myRigidbody.velocity.x) < Mathf.Epsilon))
                 isFacingRight = false;
+        }
+    }
+
+    private void SetProjectile()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            projectile = projectileType[0];
+            harpoonProjectile = true;
+            arrowProjectile = false;
+            Debug.Log("Projectile has been changed to " + projectileType[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            projectile = projectileType[1];
+            harpoonProjectile = false;
+            arrowProjectile = true;
+            Debug.Log("Projectile has been changed to " + projectileType[1]);
         }
     }
 }

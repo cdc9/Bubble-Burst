@@ -119,11 +119,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 10
+  harpoonProjectile: 0
+  arrowProjectile: 0
   projectile: {fileID: 7120845630877682016, guid: 5f547d2968aad6f4cab0c52a73a25668,
     type: 3}
   projectileChain: {fileID: 4624310962620119832, guid: f3a8312121db2d442ad4e57a5350d83a,
     type: 3}
   gun: {fileID: 7318363272630480927}
+  projectileType:
+  - {fileID: 7120845630877682016, guid: 5f547d2968aad6f4cab0c52a73a25668, type: 3}
+  - {fileID: 7120845630877682016, guid: 5f547d2968aad6f4cab0c52a73a25668, type: 3}
   isShotFired: 0
 --- !u!70 &3916961307067639251
 CapsuleCollider2D:
