@@ -45,7 +45,7 @@ public class Projectile : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         Destroy(gameObject);
-        player.isShotFired = false; //Give player the ability to shoot again
+        player.projectileCount--;
     }
    
 }

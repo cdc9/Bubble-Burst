@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private bool isFacingRight;
     public bool harpoonProjectile;
     public bool arrowProjectile;
+    public int projectileCount;
     //cached components
     Rigidbody2D myRigidbody;
     Collider2D myCollider;
@@ -20,7 +21,6 @@ public class PlayerController : MonoBehaviour
     //Shoot code
     public GameObject projectile, projectileChain, gun;
     public GameObject[] projectileType;
-    public bool isShotFired;
 
 
     // Start is called before the first frame update
@@ -32,10 +32,10 @@ public class PlayerController : MonoBehaviour
         myAnimator = GetComponent<Animator>();
 
         //Projectile starting values
-        isShotFired = false;
         projectile = projectileType[0];
         harpoonProjectile = true;
         arrowProjectile = false;
+        projectileCount = 0;
     }
 
     // Update is called once per frame
@@ -68,13 +68,23 @@ public class PlayerController : MonoBehaviour
         if(Input.GetButtonDown("Fire1"))
         {
             //Limit the player to only one projectile on screen at a time
-            if(isShotFired == false)
+            if(projectileCount < 1 && harpoonProjectile == true)
             {
                 //Create a bullet based on whatever "projectile" the gameObject has assigned
                 GameObject newProjectile = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
                 newProjectile.transform.position = gun.transform.position;
-                isShotFired = true;
+                projectileCount++; 
             }
+
+            //Limit the player to only one projectile on screen at a time
+            if (projectileCount < 2 && arrowProjectile == true)
+            {
+                //Create a bullet based on whatever "projectile" the gameObject has assigned
+                GameObject newProjectile = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
+                newProjectile.transform.position = gun.transform.position;
+                projectileCount++;
+            }
+            
 
         }
 

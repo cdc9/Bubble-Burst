@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Boss.cs" />
     <Compile Include="Assets\Scripts\Bubble.cs" />
     <Compile Include="Assets\Scripts\Chain.cs" />
     <Compile Include="Assets\Scripts\LevelManager.cs" />
