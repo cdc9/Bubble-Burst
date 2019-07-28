@@ -5,18 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    private GameObject winLabel;
-    private bool winLabelBool;
     public GameObject[] levelBubbles;
     public int bubbleCount;
     public int totalLevelBubbles;
+
+    private GameObject winLabel;
+    private bool winLabelBool;
+
 
 
     //Use this for initialization
     void Start()
     {
-        levelBubbles = GameObject.FindGameObjectsWithTag("Bubble");
+        levelBubbles = GameObject.FindGameObjectsWithTag("Bubble"); //Find all objects in the scene and put them in the array
 
+        //Count through each object in the array, and based on color, determine how many total bubbles they are for the player to pop
         foreach(GameObject bubble in levelBubbles)
         {
             if(bubble.name.Contains("Green"))
@@ -79,18 +82,17 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
+    //When the player pops all of the bubbles in the level, set the win screen label to true
     public void HandleWinCondition()
     {
         if (totalLevelBubbles == 0)
         {
             winLabel.SetActive(true);
-            winLabelBool = true;
-            Debug.Log(winLabel);
-            
+            winLabelBool = true;            
         }
         
     }
-
+    //Once the player is ready to move on from the win screen, press the fire button to continue to the next level
     public void WinScreenHandler()
     {
         if(winLabelBool == true)

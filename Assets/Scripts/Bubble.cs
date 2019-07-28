@@ -21,6 +21,8 @@ public class Bubble : MonoBehaviour
     void Start()
     {
         currentBubbleIndex = 0;
+
+        //Set components attached to game objects to the variables
         myRigidBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
         levelManager = FindObjectOfType<LevelManager>();

@@ -18,10 +18,10 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Set components attached to game objects to the variables
         myRigidBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
         player = FindObjectOfType<PlayerController>();
-        Debug.Log(projectileSpeed);
     }
 
     // Update is called once per frame
@@ -37,13 +37,14 @@ public class Projectile : MonoBehaviour
         transform.localScale += new Vector3(0F, .15f, 0f); //Stretch the length of the projectile
         if (player.arrowProjectile == true)
         {
-            myRigidBody.velocity = new Vector2(0, projectileSpeed);
+            myRigidBody.velocity = new Vector2(0, projectileSpeed); //Move up the screen normally
         }
             
     }
-
+    //Destroy the projectile when it collides with anything
     void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Harpoon hit top!");
         Destroy(gameObject);
         player.projectileCount--;
     }

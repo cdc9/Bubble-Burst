@@ -7,6 +7,7 @@ TagManager:
   - Bubble
   - Foreground
   - Projectile
+  - Floor
   layers:
   - Default
   - TransparentFX
@@ -55,6 +56,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 4094599269
+    locked: 0
+  - name: Boss
+    uniqueID: 1081507905
     locked: 0
   - name: Bubble
     uniqueID: 1209724129

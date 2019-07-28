@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public bool harpoonProjectile;
     public bool arrowProjectile;
     public int projectileCount;
+    
     //cached components
     Rigidbody2D myRigidbody;
     Collider2D myCollider;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Set all of the components attached to the object to our variables
         myRigidbody = GetComponent<Rigidbody2D>();
         myRigidbody.freezeRotation = true;
         myCollider = GetComponent<Collider2D>();
@@ -51,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
     //NOTE: Go to project settings -> Input -> gravity to adjust how quickly the value of GetAxis drops to zero after letting go. Value 3 makes it feel slippery/laggy. Value 10 Stops almost immediately. Alternitively, user GetAxisRaw for -1,0,1 values. 
     //NOTE 2: Go to project settings -> Input -> sensitivity to adjust how quickly the value of X/Y accelerates
+    //Player movement
     public void Move()
     {
         float controlThrow = CrossPlatformInputManager.GetAxis("Horizontal"); //value is between -1 and +1 
@@ -61,22 +64,20 @@ public class PlayerController : MonoBehaviour
         bool playerHasHorizontalSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
         myAnimator.SetBool("isRunning", playerHasHorizontalSpeed);
     }
-
+    //Player shooting projectiles 
     public void Shoot()
     {
-        //TODO add shoot code here
         if(Input.GetButtonDown("Fire1"))
         {
-            //Limit the player to only one projectile on screen at a time
+            //Limit the player to only one projectile on screen at a time for harpoons
             if(projectileCount < 1 && harpoonProjectile == true)
-            {
-                //Create a bullet based on whatever "projectile" the gameObject has assigned
-                GameObject newProjectile = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
-                newProjectile.transform.position = gun.transform.position;
-                projectileCount++; 
+            {              
+                GameObject newProjectile = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;  //Create a bullet based on whatever "projectile" the gameObject has assigned
+                newProjectile.transform.position = gun.transform.position; //Set the position equal to the "gun" object attached to player object
+                projectileCount++; //Add to total number of projectiles on screen
             }
 
-            //Limit the player to only one projectile on screen at a time
+            //Limit the player to only two projectile on screen at a time for Arrows
             if (projectileCount < 2 && arrowProjectile == true)
             {
                 //Create a bullet based on whatever "projectile" the gameObject has assigned
@@ -91,7 +92,18 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //When player colliders with a bubble tagged object, restart the current level
         if (collision.collider.tag   == "Bubble")
+        {
+            Debug.Log("Game OVER!!");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //Reload the scene
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //When player colliders with a bubble tagged object, restart the current level
+        if (collision.GetComponent<Collider2D>().tag == "Bubble")
         {
             Debug.Log("Game OVER!!");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //Reload the scene
@@ -115,6 +127,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Developer cheat to quickjly switch between projectile types
     private void SetProjectile()
     {
         if (Input.GetKeyDown(KeyCode.Z))
