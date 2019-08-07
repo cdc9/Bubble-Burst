@@ -12,7 +12,7 @@ public class Boss : MonoBehaviour
     Animator myAnimator;
 
     //Boss Configs
-    public int health;
+    public BossHealth bossHealth;
     public float bossSpeed;
     public GameObject gun;
     public GameObject[] projectiles;
@@ -21,6 +21,7 @@ public class Boss : MonoBehaviour
 
     private Vector2 bossVelocity;
     private int laserMeter;
+    private bool isCutscene;
 
     // Start is called before the first frame update
     void Start()
@@ -29,18 +30,26 @@ public class Boss : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
         myAnimator = GetComponent<Animator>();
+        bossHealth = FindObjectOfType<BossHealth>();
+        isCutscene = false;
+
 
         bossVelocity = new Vector2(bossSpeed, 0); // vector2(x,y) where x is horizontal movement, and y is whatever the current y movement the player is going right now. if you put 0, player would stop all y axis movement
         timeTillNextAttack = 2f;
         currentBubbleIndex = 0;
         laserMeter = 0;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Attack();
+        if(isCutscene == false)
+        {
+            Move();
+            Attack();
+        }
+
     }
 
     private void Attack()
@@ -101,13 +110,21 @@ public class Boss : MonoBehaviour
         //If the bubble collides with player projectile, split the bubble in two and reduce bubble count;
         if (collision.gameObject.tag.Trim().Equals("Projectile"))
         {
-            health--;
+            if (isCutscene == false)
+                bossHealth.TakeDamage();
             //levelManager.HandleWinCondition();
-            if(health <= 0)
+            if(bossHealth.health <= 0)
             {
                 Destroy(gameObject);
             }
             
         }
     }
+
+    public void StopAttacking()
+    {
+        isCutscene = true;
+    }
+
+
 }
