@@ -9,6 +9,8 @@ public class BossProjectiles : MonoBehaviour
     public int damage;
     public float projectileSpeed = -10;
     public bool destroyOnHit = false;
+    public ParticleSystem explosionParticle;
+
     //Forces
     public Vector2 startingForce = new Vector2(0f, 0f);
 
@@ -50,6 +52,7 @@ public class BossProjectiles : MonoBehaviour
     {
         if (destroyOnHit == true)
         {
+            Instantiate(explosionParticle,transform.position,Quaternion.identity);
             Destroy(gameObject);
         }
     }

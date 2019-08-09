@@ -134,4 +134,6 @@ MonoBehaviour:
   damage: 0
   projectileSpeed: -10
   destroyOnHit: 0
+  explosionParticle: {fileID: 198194127032045410, guid: 46876a2780737ec45a19d62f88e5ce56,
+    type: 3}
   startingForce: {x: 0, y: 0}

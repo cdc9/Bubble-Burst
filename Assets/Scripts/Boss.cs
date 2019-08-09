@@ -18,10 +18,12 @@ public class Boss : MonoBehaviour
     public GameObject[] projectiles;
     public int currentBubbleIndex;
     public float timeTillNextAttack;
+    public LevelManager levelManager;
 
     private Vector2 bossVelocity;
     private int laserMeter;
     private bool isCutscene;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +33,7 @@ public class Boss : MonoBehaviour
         myCollider = GetComponent<Collider2D>();
         myAnimator = GetComponent<Animator>();
         bossHealth = FindObjectOfType<BossHealth>();
+        levelManager = FindObjectOfType<LevelManager>();
         isCutscene = false;
 
 
@@ -38,6 +41,10 @@ public class Boss : MonoBehaviour
         timeTillNextAttack = 2f;
         currentBubbleIndex = 0;
         laserMeter = 0;
+        if (isCutscene == false)
+        {
+            levelManager.totalLevelBubbles++;
+        }
 
     }
 
@@ -115,6 +122,8 @@ public class Boss : MonoBehaviour
             //levelManager.HandleWinCondition();
             if(bossHealth.health <= 0)
             {
+                levelManager.totalLevelBubbles--;
+                levelManager.HandleWinCondition();
                 Destroy(gameObject);
             }
             

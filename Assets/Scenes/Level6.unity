@@ -2105,7 +2105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &1582984614
 Animator:
   serializedVersion: 3
@@ -3103,7 +3103,7 @@ PrefabInstance:
     - target: {fileID: 1559861335896664520, guid: d44f6d2109a1e504594002e939f468a5,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1559861335896664629, guid: d44f6d2109a1e504594002e939f468a5,
         type: 3}
