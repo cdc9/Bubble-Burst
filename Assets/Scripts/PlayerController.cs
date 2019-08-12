@@ -9,15 +9,22 @@ public class PlayerController : MonoBehaviour
 {
     //Player Config
     public float playerSpeed;
-    private bool isFacingRight;
     public bool harpoonProjectile;
     public bool arrowProjectile;
     public int projectileCount;
-    
+    public Sprite deathSprite;
+
+    private bool paused;
+    private bool dying;
+    private bool isFacingRight;
+    [SerializeField] AudioClip shootingSFX;
+    [SerializeField] AudioClip deathSFX;
+
     //cached components
     Rigidbody2D myRigidbody;
     Collider2D myCollider;
     Animator myAnimator;
+    
 
     //Shoot code
     public GameObject projectile, projectileChain, gun;
@@ -38,15 +45,21 @@ public class PlayerController : MonoBehaviour
         harpoonProjectile = true;
         arrowProjectile = false;
         projectileCount = 0;
+        paused = false;
+        dying = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
-        FlipSprite();
-        Shoot();
-        SetProjectile();
+        if(!dying)
+        {
+            Move();
+            FlipSprite();
+            Shoot();
+            SetProjectile();
+        }
+
     }
 
 
@@ -71,7 +84,8 @@ public class PlayerController : MonoBehaviour
         {
             //Limit the player to only one projectile on screen at a time for harpoons
             if(projectileCount < 1 && harpoonProjectile == true)
-            {              
+            {
+                AudioSource.PlayClipAtPoint(shootingSFX, Camera.main.transform.position); //Play the popping sound effect
                 GameObject newProjectile = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;  //Create a bullet based on whatever "projectile" the gameObject has assigned
                 newProjectile.transform.position = gun.transform.position; //Set the position equal to the "gun" object attached to player object
                 projectileCount++; //Add to total number of projectiles on screen
@@ -89,6 +103,21 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        if (Input.GetButtonDown("Jump"))
+        {
+            if(paused)
+            {
+                Time.timeScale = 1;
+            }
+            if(!paused)
+            {
+                Time.timeScale = 0;
+            }
+
+            paused = !paused;
+
+        }
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -96,7 +125,7 @@ public class PlayerController : MonoBehaviour
         if (collision.collider.tag   == "Bubble")
         {
             Debug.Log("Game OVER!!");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //Reload the scene
+            StartCoroutine("Dying");
         }
     }
 
@@ -106,7 +135,7 @@ public class PlayerController : MonoBehaviour
         if (collision.GetComponent<Collider2D>().tag == "Bubble")
         {
             Debug.Log("Game OVER!!");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //Reload the scene
+            StartCoroutine("Dying");
         }
     }
 
@@ -145,4 +174,17 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Projectile has been changed to " + projectileType[1]);
         }
     }
+
+    //Coroutine for dealing with the playing dying
+    IEnumerator Dying()
+    {
+        myAnimator.SetBool("isDead", true); //Turn the player red in the animation
+        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position); //Play the death sound effect
+        Time.timeScale = 0; //pause time
+        dying = true; //Set to true to stop player inputs 
+        yield return new WaitForSecondsRealtime(3); //Pause for three seconds, this will ignore the fact that time is stopped for everyone else
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //Reload the scene
+        Time.timeScale = 1; //Turn the time back to normal
+    }
+
 }

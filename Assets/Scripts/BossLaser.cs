@@ -36,7 +36,6 @@ public class BossLaser : MonoBehaviour
     private void AttackDuration()
     {
         attackDuration -= Time.deltaTime;
-        Debug.Log(attackDuration);
         if(attackDuration < 0f)
         {
             if(bottomBool)
@@ -60,7 +59,6 @@ public class BossLaser : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Laser is touching floor");
         extendLaser = false;
     }
 }

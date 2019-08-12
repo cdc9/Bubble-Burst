@@ -44,7 +44,6 @@ public class Projectile : MonoBehaviour
     //Destroy the projectile when it collides with anything
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Harpoon hit top!");
         Destroy(gameObject);
         player.projectileCount--;
     }

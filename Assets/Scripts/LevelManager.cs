@@ -39,7 +39,7 @@ public class LevelManager : MonoBehaviour
                 totalLevelBubbles += 15;
             }
         }
-        Debug.Log(totalLevelBubbles);
+        Debug.Log("Total number of bubbles this level is: " + totalLevelBubbles);
 
         //Find the you win text banner and set it to false
         FindYouWin();

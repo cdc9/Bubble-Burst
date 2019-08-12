@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bubble : MonoBehaviour
 {
+    [SerializeField] AudioClip bubblePopSFX; 
+
     // Start is called before the first frame update
     Rigidbody2D myRigidBody;
     Collider2D myCollider;
@@ -44,6 +46,7 @@ public class Bubble : MonoBehaviour
         //If the bubble collides with player projectile, split the bubble in two and reduce bubble count;
         if (collision.gameObject.tag.Trim().Equals("Projectile")) 
         {
+            AudioSource.PlayClipAtPoint(bubblePopSFX, Camera.main.transform.position); //Play the popping sound effect
             Split();
             levelManager.totalLevelBubbles--;
             levelManager.HandleWinCondition();
