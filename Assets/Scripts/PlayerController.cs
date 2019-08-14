@@ -94,6 +94,7 @@ public class PlayerController : MonoBehaviour
             //Limit the player to only two projectile on screen at a time for Arrows
             if (projectileCount < 2 && arrowProjectile == true)
             {
+                AudioSource.PlayClipAtPoint(shootingSFX, Camera.main.transform.position); //Play the popping sound effect
                 //Create a bullet based on whatever "projectile" the gameObject has assigned
                 GameObject newProjectile = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
                 newProjectile.transform.position = gun.transform.position;

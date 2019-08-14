@@ -3270,6 +3270,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5402374051433073465, guid: dc8fb8a4b34cc9c4283fc5b0f3971c3e,
         type: 3}
+    - target: {fileID: 1559861335896664523, guid: d44f6d2109a1e504594002e939f468a5,
+        type: 3}
+      propertyPath: isCutscene
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1559861335896664521, guid: d44f6d2109a1e504594002e939f468a5,
         type: 3}
       propertyPath: m_CollisionDetection

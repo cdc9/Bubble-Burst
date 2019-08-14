@@ -19,10 +19,11 @@ public class Boss : MonoBehaviour
     public int currentBubbleIndex;
     public float timeTillNextAttack;
     public LevelManager levelManager;
+    public bool isCutscene;
 
     private Vector2 bossVelocity;
     private int laserMeter;
-    private bool isCutscene;
+
     
 
     // Start is called before the first frame update
@@ -34,7 +35,7 @@ public class Boss : MonoBehaviour
         myAnimator = GetComponent<Animator>();
         bossHealth = FindObjectOfType<BossHealth>();
         levelManager = FindObjectOfType<LevelManager>();
-        isCutscene = false;
+        //isCutscene = false;
 
 
         bossVelocity = new Vector2(bossSpeed, 0); // vector2(x,y) where x is horizontal movement, and y is whatever the current y movement the player is going right now. if you put 0, player would stop all y axis movement
@@ -44,6 +45,8 @@ public class Boss : MonoBehaviour
         if (isCutscene == false)
         {
             levelManager.totalLevelBubbles++;
+            Debug.Log("Cutscene is false");
+            Debug.Log(isCutscene);
         }
 
     }
@@ -125,6 +128,11 @@ public class Boss : MonoBehaviour
                 levelManager.totalLevelBubbles--;
                 levelManager.HandleWinCondition();
                 Destroy(gameObject);
+                var bossProjectiles = GameObject.FindGameObjectsWithTag("Bubble");
+                foreach (var bossProjectile in bossProjectiles)
+                {
+                    Destroy(bossProjectile);
+                }
             }
             
         }
@@ -134,6 +142,7 @@ public class Boss : MonoBehaviour
     {
         isCutscene = true;
     }
+
 
 
 }
