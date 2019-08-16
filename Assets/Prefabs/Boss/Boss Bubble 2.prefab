@@ -59,6 +59,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -134,6 +135,8 @@ MonoBehaviour:
   damage: 0
   projectileSpeed: -10
   destroyOnHit: 0
+  cantBePopped: 1
   explosionParticle: {fileID: 198194127032045410, guid: 46876a2780737ec45a19d62f88e5ce56,
     type: 3}
   startingForce: {x: 0, y: 0}
+  bubblePopSFX: {fileID: 8300000, guid: f095291ebdcf1f144bc835fe67e491f8, type: 3}

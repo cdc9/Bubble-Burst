@@ -9,6 +9,7 @@ public class BossProjectiles : MonoBehaviour
     public int damage;
     public float projectileSpeed = -10;
     public bool destroyOnHit = false;
+    public bool cantBePopped = false; // Black bubbles should be unpoppable
     public ParticleSystem explosionParticle;
 
     //Forces
@@ -17,9 +18,10 @@ public class BossProjectiles : MonoBehaviour
     //cached components
     Rigidbody2D myRigidBody;
     Collider2D myCollider;
+    [SerializeField] AudioClip bubblePopSFX;
 
     //References to other objects
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -42,8 +44,9 @@ public class BossProjectiles : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         //If the bubble collides with player projectile, split the bubble in two and reduce bubble count;
-        if (collision.gameObject.tag.Trim().Equals("Projectile"))
+        if (collision.gameObject.tag.Trim().Equals("Projectile") && cantBePopped == false)
         {
+            AudioSource.PlayClipAtPoint(bubblePopSFX, Camera.main.transform.position); //Play the popping sound effect
             Destroy(gameObject);
         }
     }

@@ -84,6 +84,10 @@ public class Boss : MonoBehaviour
                 laserMeter++;
                 currentBubbleIndex--;
                 timeTillNextAttack = 3f;
+                if(bossHealth.health <= 50)
+                {
+                    timeTillNextAttack = 1.5f;
+                }
                 return;
             }
             if (currentBubbleIndex == 0 && laserMeter < 4)
@@ -94,6 +98,10 @@ public class Boss : MonoBehaviour
                 laserMeter++;
                 currentBubbleIndex++;
                 timeTillNextAttack = 1.5f;
+                if (bossHealth.health <= 50)
+                {
+                    timeTillNextAttack = .75f;
+                }
                 return;
             }
 

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Bubble : MonoBehaviour
 {
-    [SerializeField] AudioClip bubblePopSFX; 
+
 
     // Start is called before the first frame update
+    [SerializeField] AudioClip bubblePopSFX;
     Rigidbody2D myRigidBody;
     Collider2D myCollider;
 
